@@ -11,7 +11,8 @@ ethseq.Analysis(
   model.gds = system.file("extdata", "Reference_SS2_10000SNPs.gds",
 	package="EthSEQ"),
   verbose=TRUE,
-  composite.model.call.rate = 1)
+  composite.model.call.rate = 1,
+  space = "3D") # Default space is 2D
 
 ## Load and display computed ethnicity annotations
 ethseq.annotations = read.delim(file.path(out.dir,"Report.txt"),
@@ -36,10 +37,11 @@ unlink(out.dir,recursive=TRUE)
 #  ethseq.Analysis(
 #    target.vcf =  file.path(data.dir,"Sample_SS2.vcf"),
 #    out.dir = out.dir,
-#    model.available = "SS2.Light",
+#    model.available = "SS2.Major",
 #    model.folder = data.dir,
 #    verbose=TRUE,
-#    composite.model.call.rate = 1)
+#    composite.model.call.rate = 1,
+#    space = "3D") # Default space is 2D
 #  
 #  ## Delete analysis folder
 #  unlink(data.dir,recursive=TRUE)
@@ -106,7 +108,8 @@ unlink(out.dir,recursive=TRUE)
 #  	package="EthSEQ"),
 #    verbose=TRUE,
 #    composite.model.call.rate = 1,
-#    refinement.analysis = m)
+#    refinement.analysis = m,
+#    space="3D")
 #  
 #  ## Delete analysis folder
 #  unlink(out.dir,recursive=TRUE)
@@ -133,7 +136,6 @@ unlink(out.dir,recursive=TRUE)
 #    out.dir = out.dir,
 #    model.name = "Reference.Model",
 #    bed.fn = NA,
-#    phased = FALSE,
 #    call.rate = 1,
 #    cores = 1)
 #  

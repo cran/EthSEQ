@@ -224,33 +224,43 @@ ethseq.Analysis(
   model.gds = system.file(&quot;extdata&quot;, &quot;Reference_SS2_10000SNPs.gds&quot;,
     package=&quot;EthSEQ&quot;),
   verbose=TRUE,
-  composite.model.call.rate = 1)
+  composite.model.call.rate = 1,
+  space = &quot;3D&quot;) # Default space is 2D
 </code></pre>
 
-<pre><code>## [2017-04-04 11:49:09] Running EthSEQ v2.0.1
-## [2017-04-04 11:49:09] Working directory: /tmp/RtmpfPKpw5/EthSEQ_Analysis/
-## [2017-04-04 11:49:09] Create /tmp/RtmpfPKpw5/EthSEQ_Analysis/ folder
-## [2017-04-04 11:49:09] Create target model from VCF
-## [2017-04-04 11:49:10] Create aggregated model
-## [2017-04-04 11:49:11] Perform PCA on aggregated model
+<pre><code>## [2017-07-23 21:45:45] Running EthSEQ
+## [2017-07-23 21:45:45] Working directory: /tmp/Rtmp1ZcKi2/EthSEQ_Analysis/
+## [2017-07-23 21:45:45] Create /tmp/Rtmp1ZcKi2/EthSEQ_Analysis/ folder
+## [2017-07-23 21:45:45] Create target model from VCF
+## [2017-07-23 21:45:46] Create aggregated model
+## [2017-07-23 21:45:47] Perform PCA on aggregated model
 ## Principal Component Analysis (PCA) on genotypes:
 ## Excluding 0 SNP on non-autosomes
 ## Excluding 53 SNPs (monomorphic: TRUE, &lt; MAF: NaN, or &gt; missing rate: 0)
 ## Working space: 606 samples, 9,947 SNPs
 ##     using 1 (CPU) core
 ## PCA: the sum of all selected genotypes (0, 1 and 2) = 1530755
-## Tue Apr  4 11:49:11 2017    (internal increment: 2100)
+## Sun Jul 23 21:45:47 2017    (internal increment: 1268)
 ## 
 [..................................................]  0%, ETC: ---    
 [==================================================] 100%, completed      
-## Tue Apr  4 11:49:11 2017    Begin (eigenvalues and eigenvectors)
-## Tue Apr  4 11:49:12 2017    Done.
-## [2017-04-04 11:49:12] Infer ethnicities
-## [2017-04-04 11:49:12] Print annotations
-## [2017-04-04 11:49:12] Plot visual report
+## Sun Jul 23 21:45:48 2017    Begin (eigenvalues and eigenvectors)
+## Sun Jul 23 21:45:48 2017    Done.
+## [2017-07-23 21:45:48] Infer ethnicities
 </code></pre>
 
-<pre><code>## [2017-04-04 11:49:12] Computation end
+<pre><code>## 
+##      PLEASE NOTE:  As of version 0.3-5, no degenerate (zero area) 
+##      regions are returned with the &quot;Qt&quot; option since the R 
+##      code removes them from the triangulation. 
+##      See help(&quot;delaunayn&quot;).
+</code></pre>
+
+<pre><code>## [2017-07-23 21:45:48] Print annotations
+## [2017-07-23 21:45:48] Plot visual report
+</code></pre>
+
+<pre><code>## [2017-07-23 21:45:49] Computation end
 </code></pre>
 
 <pre><code>## [1] TRUE
@@ -262,13 +272,13 @@ ethseq.annotations = read.delim(file.path(out.dir,&quot;Report.txt&quot;),
 head(ethseq.annotations)
 </code></pre>
 
-<pre><code>##   sample.id pop   type contribution
-## 1   NA18972 EAS INSIDE           NA
-## 2   NA19247 AFR INSIDE           NA
-## 3   HG02922 AFR INSIDE           NA
-## 4   NA19248 AFR INSIDE           NA
-## 5   NA18951 EAS INSIDE           NA
-## 6   NA21127 SAS INSIDE           NA
+<pre><code>##   sample.id pop    type            contribution
+## 1   NA18972 EAS  INSIDE                        
+## 2   NA19247 AFR  INSIDE                        
+## 3   HG02922 AFR CLOSEST AFR(85.11%)|SAS(14.89%)
+## 4   NA19248 AFR  INSIDE                        
+## 5   NA18951 EAS CLOSEST EAS(81.93%)|EUR(18.07%)
+## 6   NA21127 SAS  INSIDE
 </code></pre>
 
 <pre><code class="r">## Delete analysis folder
@@ -277,7 +287,7 @@ unlink(out.dir,recursive=TRUE)
 
 <h2>Perform ethnicity analysis using pre-computed reference model</h2>
 
-<p>Analysis of 6 individuals from 1,000 Genome Project using a reference model built from 1,000 Genome Project individual&#39;s genotype data. Genotype data for 123,292 SNPs included in Agilent Sure Select v2 captured regions are provided in input to EthSEQ in VCF format while reference model selected among the set of pre-computed reference model. Reference model SS2.Light refers to the reference model built from 800 individuals from 1,000 Genome Project and considering 123,292 SNPs included in Agilent Sure Select v2 captured regions. Note that a reference model version called SS2 considering gentoype data for more than 2,000 individuals from 1,000 Genome Project is also available.</p>
+<p>Analysis of 6 individuals from 1,000 Genome Project using a reference model built from 1,000 Genome Project individual&#39;s genotype data. Genotype data for 123,292 SNPs included in Agilent Sure Select v2 captured regions are provided in input to EthSEQ in VCF format while reference model selected among the set of pre-computed reference model. Reference model SS2.Major refers to the reference model built from 1550 individuals (from AFR, EUR, SAS and EAS major populations) from 1,000 Genome Project and considering 123,292 SNPs included in Agilent Sure Select v2 captured regions. Note that a reference model version called SS2 considering gentoype data for more than 2,000 individuals from 1,000 Genome Project is also available.</p>
 
 <pre><code class="r">library(EthSEQ)
 
@@ -293,10 +303,11 @@ download.file(&quot;https://github.com/aromanel/EthSEQ_Data/raw/master/Sample_SS
 ethseq.Analysis(
   target.vcf =  file.path(data.dir,&quot;Sample_SS2.vcf&quot;),
   out.dir = out.dir,
-  model.available = &quot;SS2.Light&quot;,
+  model.available = &quot;SS2.Major&quot;,
   model.folder = data.dir,
   verbose=TRUE,
-  composite.model.call.rate = 1)
+  composite.model.call.rate = 1,
+  space = &quot;3D&quot;) # Default space is 2D
 
 ## Delete analysis folder
 unlink(data.dir,recursive=TRUE)
@@ -371,7 +382,8 @@ ethseq.Analysis(
     package=&quot;EthSEQ&quot;),
   verbose=TRUE,
   composite.model.call.rate = 1,
-  refinement.analysis = m)
+  refinement.analysis = m,
+  space=&quot;3D&quot;)
 
 ## Delete analysis folder
 unlink(out.dir,recursive=TRUE)
@@ -402,7 +414,6 @@ ethseq.RM(
   out.dir = out.dir,
   model.name = &quot;Reference.Model&quot;,
   bed.fn = NA,
-  phased = FALSE,
   call.rate = 1,
   cores = 1)
 

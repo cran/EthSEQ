@@ -5,8 +5,7 @@
 \title{Create a reference model for ethnicity analysis}
 \usage{
 ethseq.RM(vcf.fn, annotations, out.dir = "./",
-  model.name = "Reference.Model", bed.fn = NA, phased = FALSE,
-  call.rate = 1, cores = 1)
+  model.name = "Reference.Model", bed.fn = NA, call.rate = 1, cores = 1)
 }
 \arguments{
 \item{vcf.fn}{Paths to genotype files in VCF format}
@@ -18,8 +17,6 @@ ethseq.RM(vcf.fn, annotations, out.dir = "./",
 \item{model.name}{Name of the output model}
 
 \item{bed.fn}{Path to BED file with regions of interest}
-
-\item{phased}{Logical value indicating if the genotypes are phased}
 
 \item{call.rate}{SNPs call rate cutoff for inclusion in the final reference model}
 
@@ -51,7 +48,6 @@ ethseq.RM(
   out.dir = out.dir,
   model.name = "Reference.Model",
   bed.fn = NA,
-  phased = FALSE,
   call.rate = 1,
   cores = 1)
 

@@ -1,13 +1,4 @@
----
-title: "EthSEQ: Ethnicity Annotation from Whole Exome Sequencing Data"
-author: "Alessandro Romanel"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{EthSEQ: Ethnicity Annotation from Whole Exome Sequencing Data}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+# EthSEQ: ethnicity annotations from whole exome sequencing data
 
 Whole exome sequencing (WES) is widely utilized both in translational cancer genomics studies and in the setting of precision medicine. Stratification of individual’s ethnicity is fundamental for the correct interpretation of personal genomic variation impact. We implemented EthSEQ to provide reliable and rapid ethnicity annotation from whole exome sequencing individual’s data. EthSEQ can be integrated into any WES based processing pipeline and exploits multi-core capabilities.
 
@@ -16,11 +7,15 @@ about individual’s inferred ethnicity, including aggregated visual reports.
 
 ***
 
+## Installation
+
+You can either install EthSEQ from github repository using devtools package or directly from CRAN repository.
+
 ## Perform ethnicity analysis with individuals genotype data from VCF file
 
 Analysis of 6 individuals from 1,000 Genome Project using a reference model built from 1,000 Genome Project individual's genotype data. Genotype data for 10,000 SNPs included in Agilent Sure Select v2 captured regions are provided in input to EthSEQ in VCF format while reference model is provided in GDS format and describes genotype data for 1,000 Genome Project individuls for the same SNPs set. 
 
-```{r}
+```
 library(EthSEQ)
 
 out.dir = file.path(tempdir(),"EthSEQ_Analysis/")
@@ -49,7 +44,7 @@ unlink(out.dir,recursive=TRUE)
 
 Analysis of 6 individuals from 1,000 Genome Project using a reference model built from 1,000 Genome Project individual's genotype data. Genotype data for 123,292 SNPs included in Agilent Sure Select v2 captured regions are provided in input to EthSEQ in VCF format while reference model selected among the set of pre-computed reference model. Reference model SS2.Major refers to the reference model built from 1550 individuals (from AFR, EUR, SAS and EAS major populations) from 1,000 Genome Project and considering 123,292 SNPs included in Agilent Sure Select v2 captured regions. Note that a reference model version called SS2 considering gentoype data for more than 2,000 individuals from 1,000 Genome Project is also available.
 
-```{r,eval=FALSE}
+```
 library(EthSEQ)
 
 data.dir = file.path(tempdir(),"EthSEQ_Data/")
@@ -79,7 +74,7 @@ unlink(out.dir,recursive=TRUE)
 
 Analysis of individual NA07357 from 1,000 Genome Project using a reference model built from 1,000 Genome Project individual's genotype data. Genotype data for 10,000 SNPs included in Agilent Sure Select v2 captured regions are provided in input to EthSEQ with a BAM file. reference model is provided in GDS format and describes genotype data for 1,000 Genome Project individuls for the same SNPs set. Note than the BAM given in input to EthSEQ is a toy BAM file containing only reads overlapping the positions of the 10,000 SNPs considered in the analysis.
 
-```{r,eval=FALSE}
+```
 library(EthSEQ)
 
 data.dir = file.path(tempdir(),"EthSEQ_Data")
@@ -121,7 +116,7 @@ unlink(out.dir,recursive=TRUE)
 
 Multi-step refinement Analysis of individuals from 1,000 Genome Project using a reference model built from 1,000 Genome Project individual's genotype data (set of analysed individuals and individuals used for the reference model are disjoint). Genotype data for 10,000 SNPs included in Agilent Sure Select v2 captured regions are provided in input to EthSEQ in GDS format while reference model is provided in GDS format and describes genotype data for 1,000 Genome Project reference individuls for the same SNPs set. Multi-step refinement tree is constructed as matrix. Non-empty cells in columns i contains parent nodes for non-empty cells in columns i+1. Ethnic groups in child nodes should be included in parent nodes, while siblings node ethnic groups should be disjoint. Consult EthSEQ paper supplementary material for more complicated examples.  
 
-```{r,eval=FALSE}
+```
 library(EthSEQ)
 
 out.dir = file.path(tempdir(),"EthSEQ_Analysis")
@@ -156,7 +151,7 @@ unlink(out.dir,recursive=TRUE)
 
 Construction of a reference model from two genotype data files in VCF format and a corresponding annotation files which described ethnicity and sex of each sample contained in the genotype data files.
 
-```{r,eval=FALSE}
+```
 library(EthSEQ)
 
 out.dir = tempdir()
@@ -185,3 +180,5 @@ ethseq.RM(
 unlink(out.dir,recursive=TRUE)
 ```
 
+## Reference paper
+Alessandro Romanel, Tuo Zhang, Olivier Elemento, Francesca Demichelis; EthSEQ: ethnicity annotation from whole exome sequencing data. Bioinformatics, 2017.
