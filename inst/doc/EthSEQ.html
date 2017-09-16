@@ -228,25 +228,26 @@ ethseq.Analysis(
   space = &quot;3D&quot;) # Default space is 2D
 </code></pre>
 
-<pre><code>## [2017-07-23 21:45:45] Running EthSEQ
-## [2017-07-23 21:45:45] Working directory: /tmp/Rtmp1ZcKi2/EthSEQ_Analysis/
-## [2017-07-23 21:45:45] Create /tmp/Rtmp1ZcKi2/EthSEQ_Analysis/ folder
-## [2017-07-23 21:45:45] Create target model from VCF
-## [2017-07-23 21:45:46] Create aggregated model
-## [2017-07-23 21:45:47] Perform PCA on aggregated model
+<pre><code>## [2017-08-21 15:29:39] Running EthSEQ
+## [2017-08-21 15:29:39] Working directory: /tmp/RtmpJ82fvz/EthSEQ_Analysis/
+## [2017-08-21 15:29:39] Create /tmp/RtmpJ82fvz/EthSEQ_Analysis/ folder
+## [2017-08-21 15:29:39] Create target model from VCF
+## [2017-08-21 15:29:40] Create aggregated model
+## [2017-08-21 15:29:40] Perform PCA on aggregated model
 ## Principal Component Analysis (PCA) on genotypes:
 ## Excluding 0 SNP on non-autosomes
-## Excluding 53 SNPs (monomorphic: TRUE, &lt; MAF: NaN, or &gt; missing rate: 0)
+## Excluding 53 SNPs (monomorphic: TRUE, MAF: NaN, missing rate: 0)
 ## Working space: 606 samples, 9,947 SNPs
 ##     using 1 (CPU) core
-## PCA: the sum of all selected genotypes (0, 1 and 2) = 1530755
-## Sun Jul 23 21:45:47 2017    (internal increment: 1268)
+## PCA:    the sum of all selected genotypes (0,1,2) = 1530755
+## CPU capabilities: Double-Precision SSE2
+## Mon Aug 21 15:29:40 2017    (internal increment: 2100)
 ## 
 [..................................................]  0%, ETC: ---    
-[==================================================] 100%, completed      
-## Sun Jul 23 21:45:48 2017    Begin (eigenvalues and eigenvectors)
-## Sun Jul 23 21:45:48 2017    Done.
-## [2017-07-23 21:45:48] Infer ethnicities
+[==================================================] 100%, completed in 1s
+## Mon Aug 21 15:29:41 2017    Begin (eigenvalues and eigenvectors)
+## Mon Aug 21 15:29:41 2017    Done.
+## [2017-08-21 15:29:41] Infer ethnicities
 </code></pre>
 
 <pre><code>## 
@@ -256,11 +257,11 @@ ethseq.Analysis(
 ##      See help(&quot;delaunayn&quot;).
 </code></pre>
 
-<pre><code>## [2017-07-23 21:45:48] Print annotations
-## [2017-07-23 21:45:48] Plot visual report
+<pre><code>## [2017-08-21 15:29:42] Print annotations
+## [2017-08-21 15:29:42] Plot visual report
 </code></pre>
 
-<pre><code>## [2017-07-23 21:45:49] Computation end
+<pre><code>## [2017-08-21 15:29:42] Computation end
 </code></pre>
 
 <pre><code>## [1] TRUE
@@ -348,7 +349,8 @@ ethseq.Analysis(
   mdc=10,
   run.genotype = TRUE,
   composite.model.call.rate = 1,
-  cores=1)
+  cores=1,
+  bam.chr.encoding = FALSE) # chromosome names encoded without &quot;chr&quot; prefix in BAM files
 
 ## Delete analysis folder
 unlink(data.dir,recursive=TRUE)

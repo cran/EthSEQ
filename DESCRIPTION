@@ -1,7 +1,7 @@
 Package: EthSEQ
 Type: Package
 Title: Ethnicity Annotation from Whole Exome Sequencing Data
-Version: 2.1.0
+Version: 2.1.1
 Author: Alessandro Romanel
 Maintainer: Alessandro Romanel <alessandro.romanel@unitn.it>
 Description: Reliable and rapid ethnicity annotation from whole exome sequencing data.
@@ -15,6 +15,6 @@ biocViews:
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2017-07-23 19:45:49 UTC; romanel
+Packaged: 2017-08-21 13:29:43 UTC; romanel
 Repository: CRAN
-Date/Publication: 2017-07-23 19:59:09 UTC
+Date/Publication: 2017-09-16 09:49:49 UTC
