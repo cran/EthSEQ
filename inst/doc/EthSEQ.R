@@ -1,4 +1,4 @@
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(EthSEQ)
 
 out.dir = file.path(tempdir(),"EthSEQ_Analysis/")
@@ -19,7 +19,7 @@ head(ethseq.annotations)
 ## Delete analysis folder
 unlink(out.dir,recursive=TRUE)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(EthSEQ)
 #  
 #  data.dir = file.path(tempdir(),"EthSEQ_Data/")
@@ -44,7 +44,7 @@ unlink(out.dir,recursive=TRUE)
 #  unlink(data.dir,recursive=TRUE)
 #  unlink(out.dir,recursive=TRUE)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(EthSEQ)
 #  
 #  data.dir = file.path(tempdir(),"EthSEQ_Data")
@@ -82,7 +82,7 @@ unlink(out.dir,recursive=TRUE)
 #  unlink(data.dir,recursive=TRUE)
 #  unlink(out.dir,recursive=TRUE)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(EthSEQ)
 #  
 #  out.dir = file.path(tempdir(),"EthSEQ_Analysis")
@@ -112,7 +112,7 @@ unlink(out.dir,recursive=TRUE)
 #  ## Delete analysis folder
 #  unlink(out.dir,recursive=TRUE)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(EthSEQ)
 #  
 #  out.dir = tempdir()

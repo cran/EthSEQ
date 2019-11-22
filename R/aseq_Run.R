@@ -5,7 +5,7 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
       ## Create VCF file
       model = snpgdsOpen(model.path,readonly = F)
       snp.list = snpgdsSNPList(model)
-      vcf = cbind(snp.list$chromosome,pos=snp.list$position,snp.list$rs.id,
+      vcf = cbind(snp.list$chromosome,pos=snp.list$position,snp.list$snp.id,
                   as.character(read.gdsn(index.gdsn(model,"snp.ref"))),
                   as.character(read.gdsn(index.gdsn(model,"snp.alt"))),".",".",".")
       colnames(vcf)= c("CHR","POS","ID","REF","ALT","QUAL","FILTER","INFO")
@@ -19,7 +19,7 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
         aseq.exec = file.path(aseq.path,"ASEQ")
         if(!file.exists(aseq.exec))
         {
-          download.file("https://github.com/aromanel/EthSEQ_Data/raw/master/ASEQ_binaries/linux64/ASEQ",file.path(aseq.path,"ASEQ"))
+          download.file("https://github.com/cibiobcg/EthSEQ_Data/raw/master/ASEQ_binaries/linux64/ASEQ",file.path(aseq.path,"ASEQ"))
           #unzip(file.path(aseq.path,"ASEQ.zip"),exdir=aseq.path)
           Sys.chmod(aseq.exec, mode = "0755", use_umask = TRUE)
         }
@@ -36,7 +36,7 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
         aseq.exec = file.path(aseq.path,"ASEQ")
         if(!file.exists(aseq.exec))
         {
-          download.file("https://github.com/aromanel/EthSEQ_Data/raw/master/ASEQ_binaries/macosx/ASEQ",file.path(aseq.path,"ASEQ"))
+          download.file("https://github.com/cibiobcg/EthSEQ_Data/raw/master/ASEQ_binaries/macosx/ASEQ",file.path(aseq.path,"ASEQ"))
           Sys.chmod(aseq.exec, mode = "0755", use_umask = TRUE)
         }
         for (b in bam.files)
@@ -51,7 +51,7 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
         aseq.exec = file.path(aseq.path,"ASEQ.exe")
         if(!file.exists(aseq.exec))
         {
-          download.file("https://github.com/aromanel/EthSEQ_Data/raw/master/ASEQ_binaries/win32/ASEQ.exe",file.path(aseq.path,"ASEQ.exe"))
+          download.file("https://github.com/cibiobcg/EthSEQ_Data/raw/master/ASEQ_binaries/win32/ASEQ.exe",file.path(aseq.path,"ASEQ.exe"))
         }
         for (b in bam.files)
         {
