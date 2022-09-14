@@ -1,5 +1,12 @@
 = EthSEQ News
 
+== Changes in EthSEQ 3.0.0
+
+* Added function to perform a fast parse of the VCF file, using C++.
+* New collection of reference models.
+* Added hg19/38 parameter.
+* Added major population selection for reference models.
+
 == Changes in EthSEQ 2.1.4
 
 * Fixed pre-computed reference model download mode for Windows users.

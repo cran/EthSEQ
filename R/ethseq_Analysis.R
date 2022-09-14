@@ -1,27 +1,30 @@
-#' Ethnicity analysis from whole-exome sequencing data
+#' Ancestry analysis from whole-exome and targeted sequencing data
 #'
-#' This function performs ethnicity analysis of a set of samples ad reports the results.
+#' This function performs ancestry analysis of a set of samples ad reports the results.
 #'
 #' @param target.vcf Path to the sample's genotypes in VCF format
 #' @param target.gds Path to the sample's genotypes in GDS format
 #' @param bam.list Path to a file containing a list of BAM files paths
 #' @param out.dir Path to the folder where the output of the analysis is saved
 #' @param model.gds Path to a GDS file specifying the reference model
-#' @param model.available String specifying the pre-computed reference model to use (SS2,SS4,NimblegenV3,HALO,Exonic)
-#' @param model.folder Path to the folder where reference models are already present of downloaded when needed
-#' @param run.genotype Logical values indicating wheter the ASEQ genotype should be run
-#' @param aseq.path Path to the folder where ASEQ binary is available of is downloaded when needed
+#' @param model.available String specifying the pre-computed reference model to use
+#' @param model.assembly String value indicating the assembly version to download for the pre-build models
+#' @param model.pop String value indicating the population to download for the pre-build models
+#' @param model.folder Path to the folder where reference models are already present or downloaded when needed
+#' @param run.genotype Logical values indicating whether the ASEQ genotype should be run
+#' @param aseq.path Path to the folder where ASEQ binary is available or is downloaded when needed
 #' @param mbq Minmum base quality used in the pileup by ASEQ
 #' @param mrq Minimum read quality used in the piluep by ASEQ
-#' @param mdc Minimum read count accettable for genotype inference by ASEQ
+#' @param mdc Minimum read count acceptable  for genotype inference by ASEQ
 #' @param cores Number of parallel cores used for the analysis
-#' @param verbose Print detaild information
+#' @param verbose Print detailed information
 #' @param composite.model.call.rate SNP call rate used to run Principal Component Analysis (PCA)
-#' @param refinement.analysis Matrix specyfing a tree of ethnicities
-#' @param space Dimensions of PCA space used to infer ethnicity (2D or 3D)
+#' @param refinement.analysis Matrix specifying a tree of ancestry sets
+#' @param space Dimensions of PCA space used to infer ancestry (2D or 3D)
 #' @param bam.chr.encoding Logical value indicating whether input BAM files have chromosomes encoded with "chr" prefix
 #' @return Logical value indicating the success of the analysis
 #' @export
+
 ethseq.Analysis <- function(
   target.vcf = NA,
   target.gds = NA,
@@ -29,6 +32,8 @@ ethseq.Analysis <- function(
   out.dir = "/tmp",
   model.gds = NA,
   model.available = NA,
+  model.assembly = 'hg38',
+  model.pop = 'All',
   model.folder = "/tmp",
   run.genotype = FALSE,
   aseq.path = "/tmp",
@@ -44,12 +49,12 @@ ethseq.Analysis <- function(
 {
   
   ## Version
-  message.Date("Running EthSEQ")
-  message.Date(paste("Working directory: ",out.dir,sep=""))
+  .message.Date("Running EthSEQ")
+  .message.Date(paste("Working directory: ",out.dir,sep=""))
   
   if(!file.exists(out.dir))
   {
-    message.Date(paste("Create ",out.dir," folder",sep=""))
+    .message.Date(paste("Create ",out.dir," folder",sep=""))
     dir.create(out.dir)
   }
   
@@ -58,27 +63,32 @@ ethseq.Analysis <- function(
   {
     if(is.na(model.available))
     {
-      message.Date("ERROR: model.gds or model.available variables should be specified.")
+      .message.Date("ERROR: model.gds or model.available variables should be specified.")
       return(FALSE)
     }
-    model.path = get.Model(model.available,model.folder)
+    model.path = .get.Model(model.available,model.folder, model.assembly, model.pop)
+    if(is.na(model.path)){
+      .message.Date(paste("Model ",model.available," (using assembly ",model.assembly," and/or poopulation ",model.pop,") not available.\nPlease run getModelsList() to obtain the list of available models, assembly and populations.",sep=""))
+      return(FALSE)
+    }
   } else
   {
     model.path = model.gds
   }
   
+  # Run ASEQ when target VCF and GDS are not provided
   if(is.na(target.vcf)&is.na(target.gds))
   {
     if(is.na(bam.list))
     {
-      message.Date("ERROR: target.vcf or bam.list variables should be specified.")
+      .message.Date("ERROR: target.vcf or bam.list variables should be specified.")
       return(FALSE)
     }
     
     ### Check if all BAM files exists
     if(run.genotype&any(!file.exists(unique(readLines(bam.list)))))
     {
-      message.Date("ERROR: one or more BAM files do not exist.")
+      .message.Date("ERROR: one or more BAM files do not exist.")
       return(FALSE)
     }
     bam.files = unique(readLines(bam.list))
@@ -89,30 +99,30 @@ ethseq.Analysis <- function(
     genotype.dir = file.path(out.dir,"ASEQGenotypes","")
     if(!file.exists(genotype.dir))
     {
-      message.Date(paste("Create ",genotype.dir," folder",sep=""))
+      .message.Date(paste("Create ",genotype.dir," folder",sep=""))
       dir.create(genotype.dir)
     }
     
-    message.Date(paste("Run ASEQ to generate genotypes for ",length(bam.files)," samples",sep=""))
+    .message.Date(paste("Run ASEQ to generate genotypes for ",length(bam.files)," samples",sep=""))
     if(run.genotype)
     {
-      res = aseq.Run(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.path,cores,bam.chr.encoding)
+      res = .aseq.Run(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.path,cores,bam.chr.encoding)
       if(!res)
       {
-        message.Date("ERROR: Error while executing ASEQ.")
+        .message.Date("ERROR: Error while executing ASEQ.")
         return(FALSE)
       }
     }
     
     ## Create Target Model GDS file
-    message.Date("Create target model")
-    create.Target.Model(sample.names,genotype.dir,out.dir,cores,bam.chr.encoding)
+    .message.Date("Create target model")
+    .create.Target.Model(sample.names,genotype.dir,out.dir,cores,bam.chr.encoding)
     
     target.model = file.path(out.dir,"Target.gds")
   } else if(is.na(target.gds))
   {
-    message.Date("Create target model from VCF")
-    create.Target.Model.From.VCF(target.vcf,out.dir,cores)
+    .message.Date("Create target model from VCF")
+    .create.Target.Model.From.VCF(target.vcf,out.dir,cores)
 
     target.model = file.path(out.dir,"Target.gds")
   } else
@@ -120,17 +130,27 @@ ethseq.Analysis <- function(
     target.model = target.gds
   }
   
-  ### Create Composite model
-  message.Date("Create aggregated model")
-  res = combine.Models(model.path,target.model,out.dir,composite.model.call.rate)
+  ### Create Composite model - Changes with SNPRelate function
+  .message.Date("Create aggregated model")
+  res = .combine.Models(model.path,target.model,out.dir,verbose)
+  # snpgdsCombineGeno(c(target.model,model.path),file.path(out.dir,"Aggregated.gds"),
+  #                   method = 'position',snpfirstdim = TRUE,verbose=verbose)
+  # res = file.exists(file.path(out.dir,"Aggregated.gds"))
+  # genofile <- snpgdsOpen(file.path(out.dir,"Aggregated.gds"),readonly = F)
+  # target.sample.annot = read.gdsn(index.gdsn(snpgdsOpen(target.model),'sample.annot'))
+  # reference.sample.annot = read.gdsn(index.gdsn(snpgdsOpen(model.path),'sample.annot'))
+  # sample.annot <- rbind(target.sample.annot,reference.sample.annot)
+  # add.gdsn(genofile,"sample.annot",sample.annot)
+  # snpgdsClose(genofile)
+  
   if(!res)
   {
-    message.Date("ERROR: Target and reference models are not compatible.")
+    .message.Date("ERROR: Target and reference models are not compatible.")
     return(FALSE)
   }
   
   ### Perform PCA
-  message.Date("Perform PCA on aggregated model")
+  .message.Date("Perform PCA on aggregated model")
 
   model <- snpgdsOpen(file.path(out.dir,"Aggregated.gds"),readonly = F)
   pca <- snpgdsPCA(model,num.thread = cores,eigen.method = "DSPEVX",verbose = verbose,missing.rate = 1-composite.model.call.rate,eigen.cnt=5)
@@ -147,20 +167,20 @@ ethseq.Analysis <- function(
   snpgdsClose(model)
   
   ### Infer ethnicity
-  message.Date("Infer ethnicities")
-  annotations = get.Ethnicity(tab,space)
+  .message.Date("Infer ethnicities")
+  annotations = .get.Ethnicity(tab,space)
   
   if(!all(is.na(refinement.analysis)))
   {
-    res = check.Matrix(refinement.analysis,names(annotations[[2]]))
-    if(!res)
+    res = .check.Matrix(refinement.analysis,names(annotations[[2]]))
+    if(res)
     {
-      message.Date("ERROR: Refinement analysis matrix is wrongly formatted.")
+      .message.Date("ERROR: Refinement analysis matrix is wrongly formatted.")
       return(FALSE)
     }
     refinement.index = 1
-    refinement.leafs = get.Position.Leafs(refinement.analysis)
-    refinement.position = get.Position.Matrix(refinement.analysis)
+    refinement.leafs = .get.Position.Leafs(refinement.analysis)
+    refinement.position = .get.Position.Matrix(refinement.analysis)
     refinement.position = unlist(apply(refinement.position,1,function(x) x[which(x!="")]))
     refinement.position = as.numeric(refinement.position)
     refinement.analysis = unlist(apply(refinement.analysis,1,function(x) x[which(x!="")]))
@@ -169,17 +189,17 @@ ethseq.Analysis <- function(
     out = refinements[[1]][[1]][,c(1,2,8)]
     
     ### Plot visual PDF report
-    message.Date("Plot visual report")
+    .message.Date("Plot visual report")
     coord = annotations[[1]]
     n.dim = as.numeric(gsub("D","",space))-1
     coord = coord[,c(1,3:(3+n.dim))]
     coord[,1] = gsub("target.","",coord[,1])
     write.table(coord,file.path(out.dir,"Report_Ref0.PCAcoord"),sep="\t",row.names=F,quote=F)
-    plot.Report(tab,annotations[[1]],length(pca$snp.id),annotations[[2]],annotations[[3]],out.dir,label="_Ref0",space = space)
+    .plot.Report(tab,annotations[[1]],length(pca$snp.id),annotations[[2]],annotations[[3]],out.dir,label="_Ref0",space = space)
     
     for(s in 1:length(refinement.analysis))
     {
-      message.Date(paste("Refinement step ",s," on populations (",paste(refinement.analysis[[s]],collapse=","),")",sep=""))
+      .message.Date(paste("Refinement step ",s," on populations (",paste(refinement.analysis[[s]],collapse=","),")",sep=""))
       model <- snpgdsOpen(file.path(out.dir,"Aggregated.gds"),readonly = F)
       samples <- refinements[[refinement.position[s]]][[1]]
       samples <- samples$sample.id[which(sapply(samples$pop,function(x) length(intersect(strsplit(x,"\\|")[[1]],strsplit(refinement.analysis[[s]],"\\|")[[1]]))>0))]
@@ -199,7 +219,7 @@ ethseq.Analysis <- function(
                         stringsAsFactors = FALSE)
       snpgdsClose(model)
       
-      annotations = get.Ethnicity(tab,space)
+      annotations = .get.Ethnicity(tab,space)
       if(annotations[[4]])
       {
         coord = annotations[[1]]
@@ -207,7 +227,7 @@ ethseq.Analysis <- function(
         coord = coord[,c(1,3:(3+n.dim))]
         coord[,1] = gsub("target.","",coord[,1])
         write.table(coord,file.path(out.dir,paste("Report_Ref",s,".PCAcoord",sep="")),sep="\t",row.names=F,quote=F)
-        plot.Report(tab,annotations[[1]],length(pca$snp.id),annotations[[2]],annotations[[3]],out.dir,label=paste("_Ref",s,sep=""),space = space)
+        .plot.Report(tab,annotations[[1]],length(pca$snp.id),annotations[[2]],annotations[[3]],out.dir,label=paste("_Ref",s,sep=""),space = space)
       }
       if(!refinement.leafs[s])
       {
@@ -229,14 +249,14 @@ ethseq.Analysis <- function(
       }
     }
     
-    message.Date("Print annotations")
+    .message.Date("Print annotations")
     out[,1] = gsub("target.","",out[,1])
     write.table(out,file.path(out.dir,"Report.txt"),sep="\t",row.names=F,quote=F)
     
   } else
   {
     ### Print ethnicity annotations on tex tab-delimited file
-    message.Date("Print annotations")
+    .message.Date("Print annotations")
     out = annotations[[1]]
     out = out[,c(1,2,8,9)]
     out[,1] = gsub("target.","",out[,1])
@@ -248,10 +268,10 @@ ethseq.Analysis <- function(
     write.table(out,file.path(out.dir,"Report.PCAcoord"),sep="\t",row.names=F,quote=F)
     
     ### Plot visual PDF report
-    message.Date("Plot visual report")
-    plot.Report(tab,annotations[[1]],length(pca$snp.id),annotations[[2]],annotations[[3]],out.dir,space=space)
+    .message.Date("Plot visual report")
+    .plot.Report(tab,annotations[[1]],length(pca$snp.id),annotations[[2]],annotations[[3]],out.dir,space=space)
   }
   
-  message.Date("Computation end")
+  .message.Date("Computation end")
   return(TRUE)
 }

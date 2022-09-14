@@ -1,4 +1,4 @@
-get.Ethnicity <- function(tab,space="2D")
+.get.Ethnicity <- function(tab,space="2D")
 {
   ## get population polygons
   populations = as.character(unique(tab$pop))
@@ -23,9 +23,9 @@ get.Ethnicity <- function(tab,space="2D")
   names(polygons) = populations
   names(polygons.area) = populations
   
-  if(length(grep("target.",tab$sample.id))>0)
+  if(sum(tab$pop=='ND')>0)
   {
-    samples = tab[grep("target.",tab$sample.id),]
+    samples = tab[tab$pop=='ND',]
     samples$type = NA
     samples$pop = ""
     samples$contribution = ""
@@ -33,7 +33,7 @@ get.Ethnicity <- function(tab,space="2D")
     centroids = list()
     for(j in 1:length(polygons))
     {
-      centroids[[length(centroids)+1]] = centroid.ethseq(polygons[[j]])
+      centroids[[length(centroids)+1]] = .centroid.ethseq(polygons[[j]])
     }
     
     for(i in 1:nrow(samples))
@@ -43,8 +43,8 @@ get.Ethnicity <- function(tab,space="2D")
       
       for(j in 1:length(polygons))
       {
-        res = inhull.ethseq(pnts,polygons[[j]])
-        dist = c(dist,distance.ethseq(pnts,centroids[[j]]))
+        res = .inhull.ethseq(pnts,polygons[[j]])
+        dist = c(dist,.distance.ethseq(pnts,centroids[[j]]))
         
         if(res==1)
         {

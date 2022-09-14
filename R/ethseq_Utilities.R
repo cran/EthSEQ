@@ -1,11 +1,11 @@
 ### Print a message with time info
-message.Date <- function(message)
+.message.Date <- function(message)
 {
   cat(paste("[",Sys.time() ,"] ",message,"\n",sep=""))
 }
 
 ### Get operating system
-get.OS <- function()
+.get.OS <- function()
 {
   sysinf <- Sys.info()
   if (!is.null(sysinf))

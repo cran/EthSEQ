@@ -1,14 +1,20 @@
-get.Model <- function(model.available,model.folder)
+.get.Model <- function(model.available, model.folder, assembly, pop)
 {
-  if(!model.available%in%c("SS2.All","SS2.Major","SS4.All","SS4.Major","HALO.All","HALO.Major","NimblegenV3.All","NimblegenV3.Major","Exonic.All","Exonic.Major"))
-  {
-    message.Date(paste("Model ",model.available," not available",sep=""))
+  list.models = getModelsList()
+  if(is.data.frame(list.models)) {
+    if(!any(list.models$name==model.available))
+    {
+      return(NA)
+    }
+    model.name = paste(model.available,".",assembly,".",pop,".Model.gds",sep="")
+    if(!file.exists(file.path(model.folder,model.name)))
+    {
+      download.file(paste("https://github.com/cibiobcg/EthSEQ_Data/raw/master/EthSEQ_Models_v3/",model.name,sep=""),
+                    file.path(model.folder,model.name),mode='wb')
+    }
+    return(file.path(model.folder,model.name))
+  }
+  else {
     return(NA)
   }
-  if(!file.exists(file.path(model.folder,paste(model.available,".Model.gds",sep=""))))
-  {
-    download.file(paste("https://github.com/cibiobcg/EthSEQ_Data/raw/master/EthSEQ_Models/",model.available,".Model.gds",sep=""),
-                  file.path(model.folder,paste(model.available,".Model.gds",sep="")),mode='wb')
-  }
-  return(file.path(model.folder,paste(model.available,".Model.gds",sep="")))
 }

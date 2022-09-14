@@ -1,20 +1,23 @@
-aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.path,cores,bam.chr.encoding)
+.aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.path,cores,bam.chr.encoding)
 {
   tryCatch(
     {
       ## Create VCF file
       model = snpgdsOpen(model.path,readonly = F)
       snp.list = snpgdsSNPList(model)
-      vcf = cbind(snp.list$chromosome,pos=snp.list$position,snp.list$snp.id,
-                  as.character(read.gdsn(index.gdsn(model,"snp.ref"))),
-                  as.character(read.gdsn(index.gdsn(model,"snp.alt"))),".",".",".")
-      colnames(vcf)= c("CHR","POS","ID","REF","ALT","QUAL","FILTER","INFO")
+      vcf = cbind(snp.list$chromosome,
+                  pos=snp.list$position,
+                  sapply(strsplit(snp.list$snp.id,':'),'[[',3),
+                  read.gdsn(index.gdsn(model,"snp.ref")),
+                  read.gdsn(index.gdsn(model,"snp.alt")),
+                  ".",".",".")
+      colnames(vcf)= c("#CHROM","POS","ID","REF","ALT","QUAL","FILTER","INFO")
       if(bam.chr.encoding)
         vcf[,1] = paste("chr",vcf[,1],sep="")
       write.table(vcf,file.path(out.dir,"ModelPositions.vcf"),sep="\t",quote=F,row.names=F)
       snpgdsClose(model)
       ## Check ASEQ path or download
-      if(get.OS()=="linux")
+      if(.get.OS()=="linux")
       {
         aseq.exec = file.path(aseq.path,"ASEQ")
         if(!file.exists(aseq.exec))
@@ -25,13 +28,13 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
         }
         for (b in bam.files)
         {
-          message.Date(paste("Computing pileup of BAM file ",b,sep=""))
+          .message.Date(paste("Computing pileup of BAM file ",b,sep=""))
           command = paste(aseq.exec," vcf=",file.path(out.dir,"ModelPositions.vcf")," bam=",b," mode=GENOTYPE threads=",cores," htperc=0.2 mbq=",mbq,
                           " mrq=",mrq," mdc=",mdc," out=",genotype.dir,sep="")
           system(command,ignore.stderr = T,ignore.stdout = T)
         }
       }
-      if(get.OS()=="osx")
+      if(.get.OS()=="osx")
       {
         aseq.exec = file.path(aseq.path,"ASEQ")
         if(!file.exists(aseq.exec))
@@ -46,7 +49,7 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
           system(command,ignore.stderr = T,ignore.stdout = T)
         }
       }
-      if(get.OS()=="windows")
+      if(.get.OS()=="windows")
       {
         aseq.exec = file.path(aseq.path,"ASEQ.exe")
         if(!file.exists(aseq.exec))
@@ -61,7 +64,7 @@ aseq.Run <- function(bam.files,aseq.path,genotype.dir,out.dir,mbq,mrq,mdc,model.
         }
       }
     }, error = function(e) {
-      message.Date(e)
+      .message.Date(e)
       return(FALSE)
     })
   return(TRUE)
