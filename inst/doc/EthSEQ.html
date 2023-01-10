@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alessandro Romanel, Davide Dalfovo" />
 
-<meta name="date" content="2022-09-14" />
+<meta name="date" content="2023-01-10" />
 
 <title>EthSEQ: Ethnicity Annotation from Whole-Exome and Targeted Sequencing Data</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">EthSEQ: Ethnicity Annotation from
 Whole-Exome and Targeted Sequencing Data</h1>
 <h4 class="author">Alessandro Romanel, Davide Dalfovo</h4>
-<h4 class="date">2022-09-14</h4>
+<h4 class="date">2023-01-10</h4>
 
 
 
@@ -380,33 +380,33 @@ data for 1,000 Genome Project individuals for the same SNPs set.</p>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span><span class="dv">1</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">composite.model.call.rate =</span> <span class="dv">1</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">space =</span> <span class="st">&quot;3D&quot;</span>)</span></code></pre></div>
-<pre><code>## [2022-09-14 16:11:27] Running EthSEQ
-## [2022-09-14 16:11:27] Working directory: /tmp/RtmpgEAJv4/EthSEQ_Analysis/
-## [2022-09-14 16:11:27] Create /tmp/RtmpgEAJv4/EthSEQ_Analysis/ folder
-## [2022-09-14 16:11:27] Create target model from VCF
-## [2022-09-14 16:11:28] Create aggregated model
+<pre><code>## [2023-01-10 17:19:30] Running EthSEQ
+## [2023-01-10 17:19:30] Working directory: /tmp/Rtmpk6qR2o/EthSEQ_Analysis/
+## [2023-01-10 17:19:30] Create /tmp/Rtmpk6qR2o/EthSEQ_Analysis/ folder
+## [2023-01-10 17:19:30] Create target model from VCF
+## [2023-01-10 17:19:30] Create aggregated model
 ## Merge SNP GDS files:
-##     open &#39;/tmp/RtmpgEAJv4/EthSEQ_Analysis//Target.gds&#39; ...
+##     open &#39;/tmp/Rtmpk6qR2o/EthSEQ_Analysis//Target.gds&#39; ...
 ##         6 samples, 10000 SNPs
-##     open &#39;/tmp/Rtmp8jPUxj/Rinstc5891705c5f6f/EthSEQ/extdata/Reference.Gencode.Exome.10000SNPs.gds&#39; ...
+##     open &#39;/tmp/Rtmp1RDx5G/Rinst7a5b1f548fdc/EthSEQ/extdata/Reference.Gencode.Exome.10000SNPs.gds&#39; ...
 ##         619 samples, 10000 SNPs
 ## Concatenating samples (mapping to the first GDS file) ...
 ##     reference: 10000 SNPs (100.0%)
 ##     file 2: 586 allele flips, 0 ambiguous locus/loci
 ##         [no flip]: 9414
 ##         [flip]: 586
-##     create &#39;/tmp/RtmpgEAJv4/EthSEQ_Analysis//Aggregated.gds&#39;: 625 samples, 10000 SNPs
+##     create &#39;/tmp/Rtmpk6qR2o/EthSEQ_Analysis//Aggregated.gds&#39;: 625 samples, 10000 SNPs
 ##     FileFormat = SNP_ARRAY
 ##     writing genotypes ...
 ##     transposing the genotype matrix ...
 ## Clean up the fragments of GDS file:
-##     open the file &#39;/tmp/RtmpgEAJv4/EthSEQ_Analysis//Aggregated.gds&#39; (1.8M)
+##     open the file &#39;/tmp/Rtmpk6qR2o/EthSEQ_Analysis//Aggregated.gds&#39; (1.8M)
 ##     # of fragments: 35
-##     save to &#39;/tmp/RtmpgEAJv4/EthSEQ_Analysis//Aggregated.gds.tmp&#39;
-##     rename &#39;/tmp/RtmpgEAJv4/EthSEQ_Analysis//Aggregated.gds.tmp&#39; (1.1M, reduced: 718.8K)
+##     save to &#39;/tmp/Rtmpk6qR2o/EthSEQ_Analysis//Aggregated.gds.tmp&#39;
+##     rename &#39;/tmp/Rtmpk6qR2o/EthSEQ_Analysis//Aggregated.gds.tmp&#39; (1.1M, reduced: 718.8K)
 ##     # of fragments: 15
 ## Done.
-## [2022-09-14 16:11:28] Perform PCA on aggregated model
+## [2023-01-10 17:19:31] Perform PCA on aggregated model
 ## Principal Component Analysis (PCA) on genotypes:
 ## Excluding 0 SNP on non-autosomes
 ## Excluding 543 SNPs (monomorphic: TRUE, MAF: NaN, missing rate: 0)
@@ -416,16 +416,16 @@ data for 1,000 Genome Project individuals for the same SNPs set.</p>
 ##     # of principal components: 5
 ## PCA:    the sum of all selected genotypes (0,1,2) = 9939848
 ## CPU capabilities: Double-Precision SSE2
-## Wed Sep 14 16:11:28 2022    (internal increment: 1616)
+## Tue Jan 10 17:19:31 2023    (internal increment: 1616)
 ## 
 [..................................................]  0%, ETC: ---        
 [==================================================] 100%, completed, 1s
-## Wed Sep 14 16:11:29 2022    Begin (eigenvalues and eigenvectors)
-## Wed Sep 14 16:11:29 2022    Done.
-## [2022-09-14 16:11:29] Infer ethnicities
-## [2022-09-14 16:11:29] Print annotations
-## [2022-09-14 16:11:29] Plot visual report</code></pre>
-<pre><code>## [2022-09-14 16:11:29] Computation end</code></pre>
+## Tue Jan 10 17:19:32 2023    Begin (eigenvalues and eigenvectors)
+## Tue Jan 10 17:19:32 2023    Done.
+## [2023-01-10 17:19:32] Infer ethnicities
+## [2023-01-10 17:19:32] Print annotations
+## [2023-01-10 17:19:32] Plot visual report</code></pre>
+<pre><code>## [2023-01-10 17:19:32] Computation end</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Load and display computed ethnicity annotations</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ethseq.annotations <span class="ot">=</span> <span class="fu">read.delim</span>(<span class="fu">file.path</span>(<span class="fu">tempdir</span>(),<span class="st">&quot;EthSEQ_Analysis/Report.txt&quot;</span>),</span>

@@ -1,12 +1,12 @@
-79b91cded18a9bf128371d0acfb78d90 *DESCRIPTION
+4f3d16749490a4f554d7787344966015 *DESCRIPTION
 fe5452458c63200aa824d27afc1a3201 *NAMESPACE
 e9bc760378d0df09e15b02eb980073da *NEWS
 59a5fcbbe383ee49e1362c1758f007c6 *R/RcppExports.R
 05fa1787730a894a12466f5c08060401 *R/aseq_Run.R
 2b48e356e4fc7720cffcca1b857431f6 *R/combine_Models.R
 824f8dff2165d227db041c2276f9bcef *R/create_Target_Model.R
-cd96d1a3ee912717d98c53d735dcfbf7 *R/ethseq_Analysis.R
-9c186f5412799980a6bd74838e5663b5 *R/ethseq_RM.R
+23cb6588742e0e2e23844e4348ee8c31 *R/ethseq_Analysis.R
+30b6f3fe62b2f2017f818bb85de2c192 *R/ethseq_RM.R
 4b46fb69add1e07da7477984469f252f *R/ethseq_Utilities.R
 8a76349e3e0790b77c7ed4f77a9829a1 *R/get_Ethnicity.R
 e52afc41a7573d5eff4506116d5c47cf *R/get_InfoAnnot.R
@@ -18,8 +18,8 @@ f70fafca163e016120f46f1c770aa69c *build/vignette.rds
 af0599322cba11f054727a3f30c683a9 *inst/CITATION
 385600cb10506441d26cdf3ef9e70e03 *inst/doc/EthSEQ.R
 3ca9a72bcabd893ea48d78ba40cd2be3 *inst/doc/EthSEQ.Rmd
-650f45bd44c9b0057036f07aa4e0d736 *inst/doc/EthSEQ.html
-444d69c6a289b4b65cbbb1306fe2c979 *inst/extdata/Annotations_Test_v3.txt
+bb5d416023e25f82ada261a968779a0b *inst/doc/EthSEQ.html
+1955a603da22de5a59370e88e25a0473 *inst/extdata/Annotations_Test_v3.txt
 47781e445cca7b3495c724e54f43b871 *inst/extdata/RefSample1.vcf
 c3a249a55609668838d9b9d8a0d77a7c *inst/extdata/RefSample2.vcf
 e63162f1b9024e255a4226ed4b0cb222 *inst/extdata/Reference.Gencode.Exome.10000SNPs.gds
@@ -27,7 +27,7 @@ e63162f1b9024e255a4226ed4b0cb222 *inst/extdata/Reference.Gencode.Exome.10000SNPs
 56e715cdb30fa71e58d8422c15cef19f *inst/extdata/Samples.HGDP.10000SNPs.vcf
 b2b15821cb47d2925a7ac4be8689a9c3 *inst/extdata/exonic_kits_map.tsv
 a18c4a86fcbbf259c771cfe46238dc08 *inst/extdata/samplesPop_map.tsv
-979692cfc5731187bdf3a7f93fa6d373 *man/ethseq.Analysis.Rd
+465cb0abda794b404b356ebf095e50e8 *man/ethseq.Analysis.Rd
 29938588a9c372f4bb381c3df628b7a4 *man/ethseq.RM.Rd
 a7e82db62e268cfced3b35bbb1a6e5e1 *man/getModelsList.Rd
 a0ade8d6fe731c55d60d99eccd323dd2 *man/getSamplesInfo.Rd
