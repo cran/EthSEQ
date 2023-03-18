@@ -1,4 +1,4 @@
-4f3d16749490a4f554d7787344966015 *DESCRIPTION
+322c22918def555fbf4191792eaa6063 *DESCRIPTION
 fe5452458c63200aa824d27afc1a3201 *NAMESPACE
 e9bc760378d0df09e15b02eb980073da *NEWS
 59a5fcbbe383ee49e1362c1758f007c6 *R/RcppExports.R
@@ -14,11 +14,11 @@ dbd4b097bffbda725100122954c920f1 *R/get_Model.R
 f5b3271491cb6574085872b1c09f7c30 *R/plot_Report.R
 773078d368d394c80659c1f39d58f77b *R/process_Population_Matrix.R
 2a3af7c632698785c9894c0e7b1bac52 *R/space_Operations.R
-f70fafca163e016120f46f1c770aa69c *build/vignette.rds
-af0599322cba11f054727a3f30c683a9 *inst/CITATION
+0289cb898c09b1f004b2d263cc300284 *build/vignette.rds
+a7dd9740264c3fcbf5f3b33f92c36f30 *inst/CITATION
 385600cb10506441d26cdf3ef9e70e03 *inst/doc/EthSEQ.R
 3ca9a72bcabd893ea48d78ba40cd2be3 *inst/doc/EthSEQ.Rmd
-bb5d416023e25f82ada261a968779a0b *inst/doc/EthSEQ.html
+71740954e2232e0626009afc5006155c *inst/doc/EthSEQ.html
 1955a603da22de5a59370e88e25a0473 *inst/extdata/Annotations_Test_v3.txt
 47781e445cca7b3495c724e54f43b871 *inst/extdata/RefSample1.vcf
 c3a249a55609668838d9b9d8a0d77a7c *inst/extdata/RefSample2.vcf

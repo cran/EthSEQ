@@ -2,7 +2,7 @@ Package: EthSEQ
 Type: Package
 Title: Ethnicity Annotation from Whole-Exome and Targeted Sequencing
         Data
-Version: 3.0.1
+Version: 3.0.2
 Authors@R: c(person("Alessandro", "Romanel", email = "alessandro.romanel@unitn.it",
                   role = c("aut", "cre")),
              person("Davide","Dalfovo", email = "davide.dalfovo@unitn.it",
@@ -19,9 +19,9 @@ biocViews:
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2023-01-10 16:19:32 UTC; aromanel
+Packaged: 2023-03-18 07:55:29 UTC; aromanel
 Author: Alessandro Romanel [aut, cre],
   Davide Dalfovo [aut]
 Maintainer: Alessandro Romanel <alessandro.romanel@unitn.it>
 Repository: CRAN
-Date/Publication: 2023-01-10 16:43:11 UTC
+Date/Publication: 2023-03-18 22:00:02 UTC
